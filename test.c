@@ -10,7 +10,7 @@ int main()
 {
 
 
-    if(ReadXml("./xml.xml") == false){ return 0; }
+    if(ReadXml("./xml_utf8.xml") == false){ return 0; }
 
     char buffer[100] = {0};
     
