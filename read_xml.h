@@ -9,7 +9,7 @@
  *   (4) 内存池操作函数
  *   (5) xml文件读写操作函数
  * 5.使用流程
- *   (1) 读取xml，形成LABEL_TREE和XML_LIST。即调用ReadXml()函数
+ *   (1) 读取xml，形成LABEL_TREE和XML_LIST。即调用ReadXml()函数。
  *   (2) 通过使用xml文件读写操作函数，完成对xml内容的获取，修改等。如GetValue()，
  *       GetValues()，SetValue()等。
  *   (3) 若对xml的值进行了修改，则需要进行提交更改到新的文件中，即调用CommitToFile()，
@@ -27,8 +27,8 @@
 #include <stdarg.h>
 
 //定义使用系统-多选一
-#define _WINDOWS_
-//#define _LINUX_
+//#define _WINDOWS_
+#define _LINUX_
 
 typedef int bool;
 #define false 0
@@ -37,7 +37,7 @@ typedef int bool;
 #define SAFE_FREE(x) if(x!=NULL){free(x);x=NULL;}
 
 #define RAM_POOL_SIZE (5*1024*1024)      //内存池大小-5M
-#define ROW_BUFFER_SIZE (1024+2)         //行缓冲大小-1024个字符+换行符'\n'+'\0'
+#define ROW_BUFFER_SIZE (1024+3)         //行缓冲大小-1024个字符+换行符'\r'+'\n'+'\0'
 #define MAX_KEY_LEN 128                  //标签名不能超过127个字符
 #define MAX_PROPERTY_LEN 64              //属性名不能超过63个字符
 #define MAX_PROPERTY_VALUE_LEN 64        //属性值不能超过63个字符
@@ -124,26 +124,6 @@ struct XML
     P_XML_List child_list;        //子标签链表
 };
 
-/*==================== 全局静态变量 ====================*/
-//xml头信息
-static char version[4];
-static char encoding[12];
-
-//xml标签树
-static P_KeyTree LABEL_TREE;
-//xml结构链表
-static P_XML XML_LIST;
-//用于构造xml结构链表的指针，始终指向当前标签所需挂接的父标签
-static P_XML parent_pointer = NULL;
-//标识当前的标签值是否记录完毕
-static bool value_finished = true;
-//临时标签名存储Buffer
-static char KEY_BUFFER[MAX_KEY_LEN];
-//key计数器
-static int key_counter;
-//value计数器
-static int value_counter;
-
 //内存池结点
 typedef struct
 {
@@ -153,13 +133,6 @@ typedef struct
     char *write_addr; //写地址
     int data_len;     //已用大小
 }RAM_POOL,*P_RAM_POOL;
-//内存池
-static P_RAM_POOL POOL;
-
-//xml文件句柄
-static FILE* XML_FILE;
-//行缓存
-char ROW[ROW_BUFFER_SIZE];
 
 /*==================== 操作函数 ====================*/
 /*==创建结点函数==*/

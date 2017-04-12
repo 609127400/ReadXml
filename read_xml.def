@@ -1,0 +1,15 @@
+LIBRARY "read_xml"
+EXPORTS
+ReadXml
+GetValue
+GetValues
+GetXmlNode
+GetChilds
+GetValueFromFile
+SetXmlHead
+SetValue
+AddOne
+DelOne
+AddOneLabel
+CommitToFile
+CloseXml

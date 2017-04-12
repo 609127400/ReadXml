@@ -1,5 +1,30 @@
 #include "read_xml.h"
 
+/*= 全局静态变量 =*/
+//xml头信息
+static char version[4];
+static char encoding[12];
+//xml标签树
+static P_KeyTree LABEL_TREE;
+//xml结构链表
+static P_XML XML_LIST;
+//用于构造xml结构链表的指针，始终指向当前标签所需挂接的父标签
+static P_XML parent_pointer = NULL;
+//标识当前的标签值是否记录完毕
+static bool value_finished = true;
+//临时标签名存储Buffer
+static char KEY_BUFFER[MAX_KEY_LEN];
+//key计数器
+static int key_counter;
+//value计数器
+static int value_counter;
+//内存池
+static P_RAM_POOL POOL;
+//xml文件句柄
+static FILE* XML_FILE;
+//行缓存
+char ROW[ROW_BUFFER_SIZE];
+
 static P_ValueNode CreateOneValueNode(void* addr,int size)
 {
     P_ValueNode value = (P_ValueNode)malloc(sizeof(ValueNode));
@@ -869,9 +894,10 @@ bool GetValueFromFile(char* xf,char* k,char* v,char* p,char* pv,ELEMENT_TYPE vt)
     
     bool is_match = false;
     bool is_finished = true;
+    char* row;
     while(fgets(ROW,ROW_BUFFER_SIZE,xml) != NULL)
     {
-	char* row = ROW;
+	row = ROW;
 	while((*row) != '\n' && (*row) != '\r' && (*row) != '\0' && (*row) != EOF)
 	{
 	    if((*row) == ' ' || (*row) == 0x9)

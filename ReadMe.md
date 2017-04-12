@@ -41,14 +41,14 @@ __目录__
     注：为叙述方便，下文中，标签名以key，标签属性以property，标签属性值以property_value，标签值以value表示。
 
 ##文件
-+ read_xml.h -- read_xml头文件 
-+ read_xml.c -- read_xml源码
-+ ReadMe.md -- read_xml说明文档
-+ xml.xml -- 示例xml文件
-+ libread_xml.so -- 封装的linux动态库
-+ read_xml.lib -- VisualStudio2015生成的windows编译动态库接口
-+ read_xml.dll -- 封装的windows动态库
-+ test.c --示例
++ ```read_xml.h -- read_xml头文件``` 
++ ```read_xml.c -- read_xml源码```
++ ```ReadMe.md -- read_xml说明文档```
++ ```xml.xml -- 示例xml文件```
++ ```libread_xml.so -- 封装的linux动态库```
++ ```read_xml.lib -- VisualStudio2015生成的windows编译动态库接口```
++ ```read_xml.dll -- 封装的windows动态库```
++ ```test.c --示例```
 
 ##处理限制
 1.文本限制
@@ -86,11 +86,11 @@ XML_LIST的头节点为静态全局变量XML_LIST。
 
 ##使用方法
 * 源码编译  
-源码中不涉及C99特征，因read_xml属于插件范畴，故read_xml以动态库的形式呈现，所以read_xml.c中并没有主函数，且原则上只对外提供非static修饰的函数。用户可自己编译，文档结构十分简单，只有一个.c文件和一个同名的.h文件。用户可自行对read_xml.h中的一些宏，主要是针对各种Buffer的大小进行配置。
+源码中不涉及C99特征，简单的执行gcc test.c命令即可。根据所在系统，变更read_json.h中的系统宏定义。因read_xml属于插件范畴，故read_xml以动态库的形式呈现，所以read_xml.c中并没有主函数，且原则上只对外提供非static修饰的函数。用户可自己修改并编译，文档结构十分简单，只有一个.c文件和一个同名的.h文件。用户可自行对read_xml.h中的一些宏，主要是针对各种Buffer的大小进行配置。
 * 函数调用  
 请参考read_xml.h文件对各个函数的说明。
 
 ##作者信息和Bug反馈
-王雅震，名不见经传，还未成为大牛，努力中...。相互学习，相互进步。个人检测有限，比如内存泄露检测，所使用的工具为valgrind，只保证程序正常结束下释放所有人工分配的内存，而在失败情况下则未做检测。若发现Bug，且您不嫌麻烦，还请将Bug的详细情况发邮件至 609127400@qq.com。
+王雅震，名不见经传，还未成为大牛，努力中...。相互学习，相互进步。个人检测有限，内存泄露检测方面，所使用的工具为valgrind，保证程序正常结束下释放所有人工分配的内存。若发现Bug，且您不嫌麻烦，还请将Bug的详细情况发邮件至 609127400@qq.com。
 
 
